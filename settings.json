@@ -16,7 +16,18 @@
         "budget":12999
     },
     {
+        "url":"https://www.amazon.in/All-New-Kindle-Paperwhite-10th-Built/dp/B077454Z99/ref=sr_1_1?crid=7EAS46VV2F59&dchild=1&keywords=amazon+kindle+paperwhite&qid=1622217166&sprefix=amazon+kindle+%2Caps%2C346&sr=8-1",
+        "budget":12999,
+        "report":"on_change"
+    },
+    {
+        "url":"https://www.amazon.in/All-New-Kindle-Paperwhite-10th-Built/dp/B077454Z99/ref=sr_1_1?crid=7EAS46VV2F59&dchild=1&keywords=amazon+kindle+paperwhite&qid=1622217166&sprefix=amazon+kindle+%2Caps%2C346&sr=8-1",
+        "budget":10999,
+        "report":"on_high"
+    },
+    {
         "url":"https://www.amazon.in/Xbox-Wireless-Controller-Carbon-Black/dp/B08K3FVP5N/ref=sr_1_4?crid=237U6SUHRGG5A&dchild=1&keywords=xbox+controller+for+pc&qid=1622282286&sprefix=xbox+%2Caps%2C300&sr=8-4",
-        "budget":4990
+        "budget":4990,
+        "report":"on_change"
     }]
 }

@@ -22,7 +22,7 @@ def get_product_details(headers, url):
     try:
         price = soup.find(id='priceblock_ourprice').get_text().strip()
     except:
-        price = "Out of stock"
+        price = -1
     return (title, price)
 
 def convert_price_to_int(price):
@@ -45,13 +45,65 @@ def build_percent_msg(percent):
     message += ")"
     return message
 
-def build_product_msg(title, price, budget):
-    message = "\nName: **" + title + "**\nPrice: **" + price
-    if (price != "Out of stock"):
-        int_price = convert_price_to_int(price)
-        percent = get_percent(budget, int_price)
-        message += build_percent_msg(percent)
+def build_product_title_msg(title):
+    return ("\nName: **" + title + "**")
+
+def build_price_outofstock_msg():
+    return ("\nPrice: **Out of stock**\n")
+
+def build_price_normal_msg(price, budget):
+    message = "\nPrice: **" + price
+    int_price = convert_price_to_int(price)
+    percent = get_percent(budget, int_price)
+    message += build_percent_msg(percent)
     message += "**\n"
+    return message
+
+def build_product_normal_msg(title, price, budget):
+    message = build_product_title_msg(title)
+    if (price == -1):
+        message += build_price_outofstock_msg()
+    else:
+        message += build_price_normal_msg(price, budget)
+    return message
+
+def build_product_onlow_msg(title, price, budget):
+    message = ""
+    int_price = convert_price_to_int(price)
+    if (int_price < budget):
+        message += build_product_title_msg(title)
+        message += build_price_normal_msg(price, budget)
+    return message
+
+def build_product_onhigh_msg(title, price, budget):
+    message = ""
+    int_price = convert_price_to_int(price)
+    if (int_price > budget):
+        message += build_product_title_msg(title)
+        message += build_price_normal_msg(price, budget)
+    return message
+
+def build_product_onchange_msg(title, price, budget):
+    message = ""
+    int_price = convert_price_to_int(price)
+    if (int_price != budget):
+        message += build_product_title_msg(title)
+        message += build_price_normal_msg(price, budget)
+    return message
+
+def build_product_msg(title, price, product):
+    try:
+        report = product['report']
+    except:
+        report = "normal"
+    if (report == "on_low" and price != -1):
+        message = build_product_onlow_msg(title, price, product['budget'])
+    elif (report == "on_high" and price != -1):
+        message = build_product_onhigh_msg(title, price, product['budget'])
+    elif (report == "on_change" and price != -1):
+        message = build_product_onchange_msg(title, price, product['budget'])
+    else:
+        message = build_product_normal_msg(title, price, product['budget'])
     return message
 
 def post_discord_msg(settings, message):
@@ -61,7 +113,10 @@ def post_discord_msg(settings, message):
         "content": "Hey guys,\nI'm not ready yet.. this is just a test msg!\n"
     }
     msg['username'] = settings['botname']
-    msg['content'] = intro + message
+    if (message != ""):
+        msg['content'] = intro + message
+    else:
+        msg['content'] = intro + "Oops! no updates for today."
     result = requests.post(settings['discord_webhooks'], json=msg)
     return result.status_code
 
@@ -75,7 +130,7 @@ def main(args=None):
     # Loop over all the products
     for product in settings['products']:
         title, price = get_product_details(settings['amazon_headers'], product['url'])
-        message += build_product_msg(title, price, product['budget'])
+        message += build_product_msg(title, price, product)
     # Post the message to discord
     post_discord_msg(settings['discord_setup'], message)
 
