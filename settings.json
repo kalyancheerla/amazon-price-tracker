@@ -1,0 +1,22 @@
+{
+    "amazon_headers" : {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"},
+    "discord_setup" : {
+        "discord_webhooks" : "<ADD DISCORD WEBHOOKS URL IN HERE>",
+        "botname" : "Price",
+        "intros" : [
+            "Crap! Work chores.\nFind my updates below ...\n",
+            "Hey hey, it's me your lovely assistant Price reporing for duty.\nBelow are some cool updates ...\n",
+            "Captain, Price reporting for work.\nBelow are the updates for the day ...\n",
+            "Hey folks,\nPrice reporting for duty and below are some updates!\n",
+            "Hello Numbnuts,\nBelow is my complete update ...\n"
+        ]
+    },
+    "products" : [{
+        "url":"https://www.amazon.in/All-New-Kindle-Paperwhite-10th-Built/dp/B077454Z99/ref=sr_1_1?crid=7EAS46VV2F59&dchild=1&keywords=amazon+kindle+paperwhite&qid=1622217166&sprefix=amazon+kindle+%2Caps%2C346&sr=8-1",
+        "budget":12999
+    },
+    {
+        "url":"https://www.amazon.in/Xbox-Wireless-Controller-Carbon-Black/dp/B08K3FVP5N/ref=sr_1_4?crid=237U6SUHRGG5A&dchild=1&keywords=xbox+controller+for+pc&qid=1622282286&sprefix=xbox+%2Caps%2C300&sr=8-4",
+        "budget":4990
+    }]
+}

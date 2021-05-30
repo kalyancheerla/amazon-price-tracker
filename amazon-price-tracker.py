@@ -54,14 +54,15 @@ def build_product_msg(title, price, budget):
     message += "**\n"
     return message
 
-def post_discord_msg(intros, discord_url, message):
-    intro = random.choice(intros)
+def post_discord_msg(settings, message):
+    intro = random.choice(settings['intros'])
     msg = {
-        "username" : "Price",
+        "username" : "price bot",
         "content": "Hey guys,\nI'm not ready yet.. this is just a test msg!\n"
     }
+    msg['username'] = settings['botname']
     msg['content'] = intro + message
-    result = requests.post(discord_url, json=msg)
+    result = requests.post(settings['discord_webhooks'], json=msg)
     return result.status_code
 
 def main(args=None):
@@ -76,7 +77,7 @@ def main(args=None):
         title, price = get_product_details(settings['amazon_headers'], product['url'])
         message += build_product_msg(title, price, product['budget'])
     # Post the message to discord
-    post_discord_msg(settings['intros'], settings['discord_webhooks'], message)
+    post_discord_msg(settings['discord_setup'], message)
 
 if __name__ == "__main__":
     main()
